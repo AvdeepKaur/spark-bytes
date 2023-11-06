@@ -3,7 +3,7 @@ import prisma from '../prisma_client.ts';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { env } from '../common/setupEnv.ts';
-import { create } from 'ts-node';
+//import { create } from 'ts-node';
 //Delete this line once you use the function
 //@ts-ignore
 async function doesUserExist(email: string): Promise<boolean> {
@@ -73,4 +73,4 @@ export const signup = async (req: Request, res: Response) => {
   res.status(201).json({ token });
 };
 
-export const login = async (req: Request, res: Response) => { };
+//export const login = async (req: Request, res: Response) => { };
