@@ -10,17 +10,11 @@ const Login = () => {
 
   const onFinish = async (values: any) => {
     try {
-      const response = await axios.post('/login', values);
+      const response = await axios.post('http://localhost:5005/api/auth/login', values);
       const token = response.data;
       updateAuthToken(token);
-    } catch (error) {
-      if (error === 404) {
-        message.error('No user found with this email.');
-      } else if (error === 401) {
-        message.error('Wrong password. Please try again.');
-      } else {
-        message.error('An error occurred. Please try again later.');
-      }
+    } catch (error: any) {
+      message.error(`Error: ${error.message}`);
     }
   };
 
