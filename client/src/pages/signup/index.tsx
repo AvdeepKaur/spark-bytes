@@ -41,7 +41,7 @@ const Signup = () => {
       return;
       //if it passes all the requirements it needs to match the code with the signUp route
     } else {
-      //rename with the correct file name for signUp api
+      //a post request to the api
       fetch("/api/signup", {
         //posts the user inputs into the database
         method: "POST",
@@ -57,6 +57,12 @@ const Signup = () => {
         .then((response) => {
           if (response.ok) {
             return response.json();
+            //handles registration errors
+          } else if (response.status === 400) {
+            return response.json().then((data) => {
+              // Display the error message from the backend to the user
+              message.error(data.message);
+            });
           }
           throw new Error("Network response was not ok.");
         })
@@ -66,10 +72,9 @@ const Signup = () => {
           //the following is only when taking the user to the protected page as it stores the token
           //localStorage.setItem("token", data.token);
         })
-        //adjust to match the error message given by the backend
+        //catches unknown errors to the console
         .catch((error) => {
-          // Handle registration error here
-          message.error("Account for this email already exists.");
+          console.error("Error:", error);
         });
     }
   }
