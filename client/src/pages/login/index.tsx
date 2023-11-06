@@ -14,7 +14,12 @@ const Login = () => {
       const token = response.data;
       updateAuthToken(token);
     } catch (error: any) {
-      message.error(`Error: ${error.message}`);
+      if (error.message) {
+        message.error(`Error: ${error.message}`);
+      } else {
+        message.error('Error occured')
+      }
+
     }
   };
 
