@@ -42,7 +42,7 @@ const Signup = () => {
       //if it passes all the requirements it needs to match the code with the signUp route
     } else {
       //a post request to the api
-      fetch("/api/signup", {
+      fetch("/api/auth", {
         //posts the user inputs into the database
         method: "POST",
         headers: {
