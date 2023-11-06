@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { HomeOutlined } from '@ant-design/icons';
-import { Card, Button, Form, Input, Typography } from 'antd';
+import { Card, Button, Form, Input, Typography, message } from 'antd';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
@@ -12,10 +12,15 @@ const Login = () => {
     try {
       const response = await axios.post('/login', values);
       const token = response.data;
-      console.log(token);
       updateAuthToken(token);
     } catch (error) {
-      console.log('error:', error)
+      if (error === 404) {
+        message.error('No user found with this email.');
+      } else if (error === 401) {
+        message.error('Wrong password. Please try again.');
+      } else {
+        message.error('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -36,7 +41,6 @@ const Login = () => {
           style={{ maxWidth: 600, padding: '20px' }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Form.Item<FieldType>
