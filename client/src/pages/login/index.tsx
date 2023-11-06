@@ -17,7 +17,7 @@ const Login = () => {
       if (error.message) {
         message.error(`Error: ${error.message}`);
       } else {
-        message.error('Error occured')
+        message.error('Error occured');
       }
 
     }
