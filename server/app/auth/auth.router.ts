@@ -6,7 +6,7 @@ import * as eventController from './auth.controller.ts';
 
 const router = express.Router();
 router.use(authToken);
-router.get('/signup', eventController.signup);
+router.post('/signup', eventController.signup);
 //router.post('/login', login);
 //router.post('/signup', signup);
 export default router;
