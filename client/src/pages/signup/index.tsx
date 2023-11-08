@@ -42,7 +42,7 @@ const Signup = () => {
       //if it passes all the requirements it needs to match the code with the signUp route
     } else {
       //a post request to the api
-      fetch("/api/auth", {
+      fetch("http://localhost:5005/api/auth/signup", {
         //posts the user inputs into the database
         method: "POST",
         headers: {
@@ -56,21 +56,26 @@ const Signup = () => {
       })
         .then((response) => {
           if (response.ok) {
-            return response.json();
+            //the following is only when taking the user to the protected page as it stores the token
+            //localStorage.setItem("token", data.token);
+            return response.json().then((data) => {
+              // Display the error message from the backend to the user
+              if (data.token != "") {
+                console.log(data.token);
+              } else {
+                router.push("/protected");
+              }
+              localStorage.setItem("token", data.token);
+            });
+            //return response.json();
             //handles registration errors
           } else if (response.status === 400) {
             return response.json().then((data) => {
               // Display the error message from the backend to the user
-              message.error(data.message);
+              message.error(`${data.message}`);
             });
           }
           throw new Error("Network response was not ok.");
-        })
-        .then((data) => {
-          // redirects to the login page for now but can be updated to just send the user to the "/protected" page
-          router.push("/login");
-          //the following is only when taking the user to the protected page as it stores the token
-          //localStorage.setItem("token", data.token);
         })
         //catches unknown errors to the console
         .catch((error) => {
