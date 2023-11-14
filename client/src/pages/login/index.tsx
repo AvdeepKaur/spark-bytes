@@ -1,21 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { HomeOutlined } from '@ant-design/icons';
 import { Card, Button, Form, Input, Typography, message } from 'antd';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
+import router from "next/router";
 
 const Login = () => {
 
   const { updateAuthToken } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const onFinish = async (values: any) => {
     try {
-      const response = await axios.post('http://localhost:5005/api/auth/login', values);
-      const token = response.data;
+      const response = await axios.post('http://localhost:5005/api/auth/login', { email, password });
+      const token = response.data['token'];
       updateAuthToken(token);
-    } catch (error: any) {
+      router.push('/protected');
+    } catch (error: any) {   
       if (error.message) {
-        message.error(`Error: ${error.message}`);
+        message.error(`Error: ${error.response.data.error}`);
       } else {
         message.error('Error occured');
       }
@@ -46,11 +50,10 @@ const Login = () => {
             name="email"
             rules={[{ type: 'email', message: 'This is not valid E-mail!' }, { required: true, message: 'Please input your E-mail!' }]}
             style={{ marginBottom: 20 }}
-
           >
             <div>
               <Typography.Paragraph style={{ color: "#455A64", marginBottom: 5 }}>Email Address</Typography.Paragraph>
-              <Input placeholder="Email" />
+              <Input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
             </div>
           </Form.Item>
 
@@ -61,7 +64,7 @@ const Login = () => {
           >
             <div>
               <Typography.Paragraph style={{ color: "#455A64", marginBottom: 5 }}>Password</Typography.Paragraph>
-              <Input.Password placeholder="Password" />
+              <Input.Password placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
             </div>
           </Form.Item>
 
