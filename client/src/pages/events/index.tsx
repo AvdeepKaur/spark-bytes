@@ -9,6 +9,9 @@ import {
   Select,
   Button,
   Tag,
+  Form,
+  Input,
+  DatePicker,
 } from "antd";
 import { API_URL } from "../../common/constants";
 import { IAuthTokenDecoded, IEvent, ITag } from "../../common/interfaces";
@@ -32,6 +35,10 @@ const Events: FC = () => {
   const [filteredTag, setFilteredTag] = useState<string | null>(null);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [sortDesc, setSortDesc] = useState<boolean>(false);
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [expTime, setExpTime] = useState("");
+  const [tag, setTag] = useState("");
 
   const router = useRouter();
   const { getAuthState, authState } = useAuth();
@@ -99,6 +106,33 @@ const Events: FC = () => {
   const handleEventClick = (event: IEvent) => {
     setSelectedEvent(event);
     router.push(`/events/${event.event_id}`); // Navigate to the view page
+  };
+
+  const createEvent = async (values: any) => {
+
+    fetch("http://localhost:5005/api/events/create", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getAuthState()?.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        exp_time: new Date(expTime).toISOString(),
+        description: description,
+        qty: quantity,
+        tags: tag,
+      }),
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          const data = await response.json();
+          router.push("/events");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
   };
 
   return (
@@ -267,6 +301,44 @@ const Events: FC = () => {
           style={{ marginTop: "20px" }}
         />
       </div>
+
+
+
+
+      <Typography.Title
+        level={2}
+        style={{ textAlign: "center", marginBottom: "20px" }}
+      >
+        Create an Event
+      </Typography.Title>
+
+      <Form
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
+        layout="vertical"
+        style={{ maxWidth: 600 }}
+        onFinish={createEvent}
+      >
+        <Form.Item label="Description" name="description" rules={[{ required: true }]}>
+          <Input onChange={(e) => setDescription(e.target.value)} />
+        </Form.Item>
+        <Form.Item label="Quantity" name="quantity" rules={[{ required: true }]}>
+          <Input onChange={(e) => setQuantity(e.target.value)} />
+        </Form.Item>
+        <Form.Item label="Expiration Time" name="expTime" rules={[{ required: true }]}>
+          <Input onChange={(e) => setExpTime(e.target.value)} />
+        </Form.Item>
+        <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
+          <Input onChange={(e) => setTag(e.target.value)} />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{ backgroundColor: "rgb(102, 187, 106)" }}>
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+
+
     </div>
   );
 };

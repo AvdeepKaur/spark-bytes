@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import router from "next/router";
 
 const Login = () => {
-  const { updateAuthToken } = useAuth();
+  const { getAuthState, updateAuthToken } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
