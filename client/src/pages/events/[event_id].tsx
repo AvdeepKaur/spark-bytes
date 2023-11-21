@@ -73,7 +73,7 @@ const Events: React.FC = () => {
   const tableData = selectedEvent ? Object.entries(selectedEvent).map(([key, value]) => ({
     key,
     field: key,
-    value: (key === 'tags' || key === 'createdBy') ? value : value.toString(),
+    value: (key === 'tags' || key === 'createdBy') ? value : value?.toString(),
   })) : [];
 
   return (
