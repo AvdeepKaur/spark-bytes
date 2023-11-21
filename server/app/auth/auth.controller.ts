@@ -100,7 +100,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
 
-  const oldUser = getUser(email);
+  const oldUser = user;
   const payload = {
     id: oldUser['id'],
     name: oldUser['name'],
