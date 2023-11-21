@@ -1,23 +1,23 @@
-import { useEffect, FC, useState } from "react";
-import { useRouter } from "next/router";
-import { message } from "antd";
-import { API_URL } from "../../common/constants";
-import { IAuthTokenDecoded, IEvent, ITag } from "../../common/interfaces";
-import { useAuth } from "@/contexts/AuthContext";
-import { id } from "date-fns/locale";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { message, Table, Tag } from 'antd';
+import { API_URL } from '../../common/constants';
+import { useAuth } from '@/contexts/AuthContext';
+import { IEvent, ITag } from '../../common/interfaces';
 
-interface ITokenState {
-  rawToken: string;
-  decodedToken: IAuthTokenDecoded;
+interface TableRecord {
+  key: string;
+  field: string;
+  value: any; // Use 'any' here for flexibility, or define a more specific type if possible
 }
-const Events: FC = () => {
+
+const Events: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [events, setEvents] = useState<IEvent[]>([]);
-  const [totalEvents, setTotalEvents] = useState<number>(0);
-
   const router = useRouter();
   const { event_id } = router.query;
-  const { getAuthState, authState } = useAuth();
+  const { getAuthState } = useAuth();
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -29,54 +29,61 @@ const Events: FC = () => {
         });
 
         if (!eventsResponse.ok) {
-          console.log("error");
           throw new Error(`${eventsResponse.status}`);
         }
 
         const responseJSON = await eventsResponse.json();
-        const eventsData = await responseJSON.events;
-        setEvents(eventsData);
-        setIsLoading(false);
-        setTotalEvents(eventsData.length);
+        setEvents(responseJSON.events);
       } catch (error) {
-        console.error(error);
-        message.error(
-          "An error occurred while fetching events. Please try again later."
-        );
+        message.error("An error occurred while fetching events. Please try again later.");
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchEvents();
   }, [getAuthState]);
 
-  console.log(events);
   const selectedEvent = events.find((ev) => ev.event_id === Number(event_id));
+
+  const columns = [
+    {
+      title: 'Field',
+      dataIndex: 'field',
+      key: 'field',
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      key: 'value',
+      render: (value: any, record: TableRecord) => { // Explicitly declare 'value' type here
+        if (record.field === 'tags') {
+          return (value as ITag[]).map((tag) => (
+            <Tag key={tag.tag_id}>{tag.name}</Tag>
+          ));
+        }
+        if (record.field === 'location' && value) {
+          return `${value.Address}, Floor ${value.floor}, Room ${value.room}`;
+        }
+        return value;
+      },
+    },
+  ];
+
+  // Convert the selected event into a format suitable for Ant Design Table
+  const tableData = selectedEvent ? Object.entries(selectedEvent).map(([key, value]) => ({
+    key,
+    field: key,
+    value: (key === 'tags' || key === 'createdBy') ? value : value.toString(),
+  })) : [];
+
   return (
-    <div>
-      <p>
-        createdAt: {selectedEvent?.createdAt}
-        createdBy: {selectedEvent?.createdBy.name}
-        createdById: {selectedEvent?.createdById}
-        description: {selectedEvent?.description}
-        done: {selectedEvent?.done}
-        event_id: {selectedEvent?.event_id}
-        exp_time: {selectedEvent?.exp_time}
-        post_time: {selectedEvent?.post_time}
-        qty: {selectedEvent?.qty}
-        updatedAt: {selectedEvent?.updatedAt}
-        tags:{" "}
-        {selectedEvent?.tags && selectedEvent?.tags.length > 0
-          ? selectedEvent.tags.map((tag, index) => (
-              <span key={(tag as ITag).tag_id}>
-                {(tag as ITag).name}
-                {index !== selectedEvent.tags.length - 1 && ", "}
-              </span>
-            ))
-          : " Not specified"}
-        location:{" "}
-        {selectedEvent?.location
-          ? `${selectedEvent.location.Address}, Floor ${selectedEvent.location.floor}, Room ${selectedEvent.location.room}`
-          : "Not specified"}
-      </p>
+    <div style={{marginLeft:'200px',borderColor:'red'}}>
+      <Table
+        loading={isLoading}
+        dataSource={tableData}
+        columns={columns}
+        pagination={false}
+      />
     </div>
   );
 };
