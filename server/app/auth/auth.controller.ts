@@ -68,8 +68,8 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'User already exists! Please login instead.' });
   }
   const hashed_pwd = await bcrypt.hash(password, 10);
-  createUser(name, email, hashed_pwd);
-  const user = getUser(email);
+
+  const user = await createUser(name, email, hashed_pwd);
   const payload = {
     id: user['id'],
     name: name,
@@ -100,13 +100,12 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
 
-  const oldUser = getUser(email);
   const payload = {
-    id: oldUser['id'],
-    name: oldUser['name'],
+    id: user['id'],
+    name: user['name'],
     email: email,
-    canPostEvents: oldUser['canPostEvents'],
-    isAdmin: oldUser['isAdmin'],
+    canPostEvents: user['canPostEvents'],
+    isAdmin: user['isAdmin'],
   };
   const token = jwt.sign(payload, env.JWT_TOKEN_SECRET, { expiresIn: '1h' });
   res.status(201).json({ token });

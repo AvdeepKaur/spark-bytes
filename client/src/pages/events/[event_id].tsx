@@ -13,13 +13,7 @@ interface ITokenState {
 const Events: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [events, setEvents] = useState<IEvent[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<IEvent | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
   const [totalEvents, setTotalEvents] = useState<number>(0);
-  const [filteredTag, setFilteredTag] = useState<string | null>(null);
-  const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [sortDesc, setSortDesc] = useState<boolean>(false);
 
   const router = useRouter();
   const { event_id } = router.query;
@@ -55,13 +49,33 @@ const Events: FC = () => {
   }, [getAuthState]);
 
   console.log(events);
-  const ev1 = events.find((ev) => ev.event_id === Number(event_id));
+  const selectedEvent = events.find((ev) => ev.event_id === Number(event_id));
   return (
     <div>
       <p>
-        event id: {ev1?.event_id}
-        created by: {ev1?.createdBy.name}
-        tags: {ev1?.location?.Address}
+        createdAt: {selectedEvent?.createdAt}
+        createdBy: {selectedEvent?.createdBy.name}
+        createdById: {selectedEvent?.createdById}
+        description: {selectedEvent?.description}
+        done: {selectedEvent?.done}
+        event_id: {selectedEvent?.event_id}
+        exp_time: {selectedEvent?.exp_time}
+        post_time: {selectedEvent?.post_time}
+        qty: {selectedEvent?.qty}
+        updatedAt: {selectedEvent?.updatedAt}
+        tags:{" "}
+        {selectedEvent?.tags && selectedEvent?.tags.length > 0
+          ? selectedEvent.tags.map((tag, index) => (
+              <span key={(tag as ITag).tag_id}>
+                {(tag as ITag).name}
+                {index !== selectedEvent.tags.length - 1 && ", "}
+              </span>
+            ))
+          : " Not specified"}
+        location:{" "}
+        {selectedEvent?.location
+          ? `${selectedEvent.location.Address}, Floor ${selectedEvent.location.floor}, Room ${selectedEvent.location.room}`
+          : "Not specified"}
       </p>
     </div>
   );
