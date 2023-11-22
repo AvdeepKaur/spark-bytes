@@ -97,7 +97,7 @@ export const get_event_by_id = async (req: Request, res: Response) => {
 };
 
 export const create_event = async (req: Request, res: Response) => {
-  const { exp_time, description, qty, tags = {} } = req.body;
+  const { exp_time, description, qty, tags } = req.body;
   try {
     const userId = req.body.user.id;
     console.log(userId);
@@ -108,10 +108,11 @@ export const create_event = async (req: Request, res: Response) => {
     console.log('Value of tags:', tags);
     const dbTag = await prisma.tag.findFirst({
       where: {
-        name: String(tags),
+        name: String(tags.connect),
       },
     });
     console.log(dbTag);
+    if (dbTag) {
     const newEvent = await prisma.event.create({
       data: {
         post_time: now,
@@ -121,13 +122,13 @@ export const create_event = async (req: Request, res: Response) => {
         done: false,
 
         tags: {
-          connect: { tag_id: dbTag?.tag_id }, // Use the 'connect' property directly
+          connect: { tag_id: dbTag.tag_id }, // Use the 'connect' property directly
         },
         createdBy: {
           connect: { id: userId },
         },
-        // createdAt: now,
-        // updatedAt: now,
+        createdAt: now,
+        updatedAt: now,
         // location: {
         //   create: {
         //     Address: location.Address,
@@ -145,6 +146,7 @@ export const create_event = async (req: Request, res: Response) => {
     });
 
     res.status(201).json(newEvent);
+    }
   } catch (error) {
     console.error('Error creating event:', error);
     res.status(500).json({ error: 'Server error' });

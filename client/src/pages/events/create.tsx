@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
-import { BoldOutlined } from "@ant-design/icons";
+import React, { useContext, FC, useState } from "react";
 import { Typography, Button, Form, Input, DatePicker, Select } from "antd";
 import { useAuth } from "../../contexts/AuthContext";
 import router from "next/router";
 
-const Create = () => {
+const Create: React.FC = () => {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [expTime, setExpTime] = useState("");
@@ -29,6 +28,7 @@ const Create = () => {
         if (response.ok) {
           const data = await response.json();
           router.push("/events");
+          alert("event created!");
         }
       })
       .catch((error) => {
@@ -37,7 +37,13 @@ const Create = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#eaf7f0",
+        padding: "20px",
+        width: "100%",
+        height: "100%",
+      }}>
       <Typography.Title
         level={2}
         style={{ textAlign: "center", marginBottom: "20px" }}
@@ -81,9 +87,7 @@ const Create = () => {
           />
         </Form.Item>
         <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
-          <Select onSelect={(value) => setTag(value)}>
-            <Select.Option value="food">food</Select.Option>
-          </Select>
+          <Input onChange={(e) => setTag(e.target.value)} />
         </Form.Item>
         <Form.Item>
           <Button

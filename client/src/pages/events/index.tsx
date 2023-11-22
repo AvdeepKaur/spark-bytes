@@ -35,10 +35,10 @@ const Events: FC = () => {
   const [filteredTag, setFilteredTag] = useState<string | null>(null);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [sortDesc, setSortDesc] = useState<boolean>(false);
-  const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [expTime, setExpTime] = useState("");
-  const [tag, setTag] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [quantity, setQuantity] = useState("");
+  // const [expTime, setExpTime] = useState("");
+  // const [tag, setTag] = useState("");
 
   const router = useRouter();
   const { getAuthState, authState } = useAuth();
@@ -108,32 +108,32 @@ const Events: FC = () => {
     router.push(`/events/${event.event_id}`); // Navigate to the view page
   };
 
-  const createEvent = async (values: any) => {
+  // const createEvent = async (values: any) => {
 
-    fetch("http://localhost:5005/api/events/create", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${getAuthState()?.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        exp_time: new Date(expTime).toISOString(),
-        description: description,
-        qty: quantity,
-        tags: tag,
-      }),
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const data = await response.json();
-          router.push("/events");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  //   fetch("http://localhost:5005/api/events/create", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${getAuthState()?.token}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       exp_time: new Date(expTime).toISOString(),
+  //       description: description,
+  //       qty: quantity,
+  //       tags: tag,
+  //     }),
+  //   })
+  //     .then(async (response) => {
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         router.push("/events");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
 
-  };
+  // };
 
   return (
     <div
@@ -302,7 +302,7 @@ const Events: FC = () => {
         />
       </div>
 
-      <Typography.Title
+      {/* <Typography.Title
         level={2}
         style={{ textAlign: "center", marginBottom: "20px" }}
       >
@@ -356,7 +356,7 @@ const Events: FC = () => {
             Submit
           </Button>
         </Form.Item>
-      </Form>
+      </Form> */}
     </div>
   );
 };
