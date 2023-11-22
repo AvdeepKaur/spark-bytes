@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { BoldOutlined } from "@ant-design/icons";
-import { Typography, Button, Form, Input, DatePicker } from 'antd'
+import { Typography, Button, Form, Input, DatePicker, Select } from "antd";
 import { useAuth } from "../../contexts/AuthContext";
 import router from "next/router";
 
@@ -74,10 +74,16 @@ const Create = () => {
           name="expTime"
           rules={[{ required: true }]}
         >
-          <Input onChange={(e) => setExpTime(e.target.value)} />
+          <DatePicker
+            showTime
+            format="YYYY-MM-DD HH:mm"
+            onChange={(date, dateString) => setExpTime(dateString)}
+          />
         </Form.Item>
         <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
-          <Input onChange={(e) => setTag(e.target.value)} />
+          <Select onSelect={(value) => setTag(value)}>
+            <Select.Option value="food">food</Select.Option>
+          </Select>
         </Form.Item>
         <Form.Item>
           <Button
