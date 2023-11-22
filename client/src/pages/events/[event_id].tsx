@@ -45,6 +45,8 @@ const Events: React.FC = () => {
 
   const selectedEvent = events.find((ev) => ev.event_id === Number(event_id));
 
+  const loc = 'Address: ' + selectedEvent?.location?.Address + ', Floor: ' + selectedEvent?.location?.floor + ', Room: ' + selectedEvent?.location?.room;
+
   const columns = [
     {
       title: 'Field',
@@ -61,8 +63,11 @@ const Events: React.FC = () => {
             <Tag key={tag.tag_id}>{tag.name}</Tag>
           ));
         }
-        if (record.field === 'location' && value) {
-          return `${value.Address}, Floor ${value.floor}, Room ${value.room}`;
+        if (record?.field === 'location' && value) {
+          return loc;
+        }
+        if (record.field === 'createdBy' && value) {
+          return `${value.name}`
         }
         return value;
       },
