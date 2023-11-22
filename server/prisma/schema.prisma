@@ -59,7 +59,7 @@ model Photo {
 
 model Tag {
   tag_id  Int            @id @default(autoincrement())
-  name    String
+  name    String         
   color   String
   type    Tag_type       @relation(fields: [type_id], references: [id])
   type_id Int            

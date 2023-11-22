@@ -8,7 +8,7 @@ import { IEvent, ITag } from '../../common/interfaces';
 interface TableRecord {
   key: string;
   field: string;
-  value: any; 
+  value: any;
 }
 
 const Events: React.FC = () => {
@@ -46,7 +46,6 @@ const Events: React.FC = () => {
   const selectedEvent = events.find((ev) => ev.event_id === Number(event_id));
 
   const loc = 'Address: ' + selectedEvent?.location?.Address + ', Floor: ' + selectedEvent?.location?.floor + ', Room: ' + selectedEvent?.location?.room;
-
   const columns = [
     {
       title: 'Field',
@@ -57,7 +56,7 @@ const Events: React.FC = () => {
       title: 'Value',
       dataIndex: 'value',
       key: 'value',
-      render: (value: any, record: TableRecord) => { 
+      render: (value: any, record: TableRecord) => {
         if (record.field === 'tags') {
           return (value as ITag[]).map((tag) => (
             <Tag key={tag.tag_id}>{tag.name}</Tag>
@@ -82,7 +81,7 @@ const Events: React.FC = () => {
   })) : [];
 
   return (
-    <div style={{marginLeft:'200px',borderColor:'red'}}>
+    <div style={{ marginLeft: '200px', borderColor: 'red' }}>
       <Table
         loading={isLoading}
         dataSource={tableData}
