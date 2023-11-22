@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.5.2",
+    "@prisma/client": "^5.6.0",
     "@t3-oss/env-core": "^0.7.1",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
@@ -40,6 +40,6 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.0",
-    "prisma": "^5.5.2"
+    "prisma": "^5.6.0"
   }
 }

@@ -100,13 +100,13 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
 
-  const oldUser = user;
+  //const oldUser = user;
   const payload = {
-    id: oldUser['id'],
-    name: oldUser['name'],
+    id: user['id'],
+    name: user['name'],
     email: email,
-    canPostEvents: oldUser['canPostEvents'],
-    isAdmin: oldUser['isAdmin'],
+    canPostEvents: user['canPostEvents'],
+    isAdmin: user['isAdmin'],
   };
   const token = jwt.sign(payload, env.JWT_TOKEN_SECRET, { expiresIn: '1h' });
   res.status(201).json({ token });

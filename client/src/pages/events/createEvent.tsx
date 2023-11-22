@@ -11,9 +11,7 @@ const Create = () => {
   const [tag, setTag] = useState("");
   const { getAuthState, authState } = useAuth();
 
-
   const createEvent = async (values: any) => {
-
     fetch("http://localhost:5005/api/events/create", {
       method: "POST",
       headers: {
@@ -36,7 +34,6 @@ const Create = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-
   };
 
   return (
@@ -55,27 +52,45 @@ const Create = () => {
         style={{ maxWidth: 600 }}
         onFinish={createEvent}
       >
-        <Form.Item label="Description" name="description" rules={[{ required: true }]}>
+        <Form.Item
+          label="Description"
+          name="description"
+          rules={[{ required: true }]}
+        >
           <Input onChange={(e) => setDescription(e.target.value)} />
         </Form.Item>
-        <Form.Item label="Quantity" name="quantity" rules={[{ required: true }]}>
+        <Form.Item
+          label="Quantity"
+          name="quantity"
+          rules={[
+            { required: true },
+            { pattern: /^[0-9]+$/, message: "Please enter a number." },
+          ]}
+        >
           <Input onChange={(e) => setQuantity(e.target.value)} />
         </Form.Item>
-        <Form.Item label="Expiration Time" name="expTime" rules={[{ required: true }]}>
+        <Form.Item
+          label="Expiration Time"
+          name="expTime"
+          rules={[{ required: true }]}
+        >
           <Input onChange={(e) => setExpTime(e.target.value)} />
         </Form.Item>
         <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
           <Input onChange={(e) => setTag(e.target.value)} />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ backgroundColor: "rgb(102, 187, 106)" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ backgroundColor: "rgb(102, 187, 106)" }}
+          >
             Submit
           </Button>
         </Form.Item>
       </Form>
-
     </div>
-  )
-}
+  );
+};
 
 export default Create;
