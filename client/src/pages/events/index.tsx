@@ -345,9 +345,7 @@ const Events: FC = () => {
           />
         </Form.Item>
         <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
-          <Select onSelect={(value) => setTag(value)}>
-            <Select.Option value="food">food</Select.Option>
-          </Select>
+          <Input onChange={(e) => setTag(e.target.value)} />
         </Form.Item>
         <Form.Item>
           <Button

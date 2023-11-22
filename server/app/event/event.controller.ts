@@ -106,7 +106,12 @@ export const create_event = async (req: Request, res: Response) => {
     // const photoBuffer = Buffer.from(photoData, 'base64');
     // const photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
     console.log('Value of tags:', tags);
-    console.log(tags.connect);
+    const dbTag = await prisma.tag.findFirst({
+      where: {
+        name: String(tags),
+      },
+    });
+    console.log(dbTag);
     const newEvent = await prisma.event.create({
       data: {
         post_time: now,
@@ -116,7 +121,7 @@ export const create_event = async (req: Request, res: Response) => {
         done: false,
 
         tags: {
-          connect: tags.connect, // Use the 'connect' property directly
+          connect: { tag_id: dbTag?.tag_id }, // Use the 'connect' property directly
         },
         createdBy: {
           connect: { id: userId },
