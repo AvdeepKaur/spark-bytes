@@ -1,9 +1,18 @@
-import React, { useContext, FC, useState } from "react";
-import { Typography, Button, Form, Input, DatePicker, Select } from "antd";
+import React, { useContext, useState } from "react";
+import { BoldOutlined } from "@ant-design/icons";
+import {
+  Typography,
+  Button,
+  Form,
+  Input,
+  DatePicker,
+  Select,
+  Card,
+} from "antd";
 import { useAuth } from "../../contexts/AuthContext";
 import router from "next/router";
 
-const Create: React.FC = () => {
+const Create = () => {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [expTime, setExpTime] = useState("");
@@ -28,7 +37,6 @@ const Create: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           router.push("/events");
-          alert("event created!");
         }
       })
       .catch((error) => {
@@ -37,69 +45,83 @@ const Create: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: "#eaf7f0",
-        padding: "20px",
-        width: "100%",
-        height: "100%",
-      }}>
-      <Typography.Title
-        level={2}
-        style={{ textAlign: "center", marginBottom: "20px" }}
+    <>
+      <div
+        style={{
+          backgroundColor: "#eaf7f0",
+          padding: "20px",
+          width: "100%",
+          height: "100%",
+        }}
       >
-        Create an Event
-      </Typography.Title>
-
-      <Form
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
-        layout="vertical"
-        style={{ maxWidth: 600 }}
-        onFinish={createEvent}
-      >
-        <Form.Item
-          label="Description"
-          name="description"
-          rules={[{ required: true }]}
-        >
-          <Input onChange={(e) => setDescription(e.target.value)} />
-        </Form.Item>
-        <Form.Item
-          label="Quantity"
-          name="quantity"
-          rules={[
-            { required: true },
-            { pattern: /^[0-9]+$/, message: "Please enter a number." },
-          ]}
-        >
-          <Input onChange={(e) => setQuantity(e.target.value)} />
-        </Form.Item>
-        <Form.Item
-          label="Expiration Time"
-          name="expTime"
-          rules={[{ required: true }]}
-        >
-          <DatePicker
-            showTime
-            format="YYYY-MM-DD HH:mm"
-            onChange={(date, dateString) => setExpTime(dateString)}
-          />
-        </Form.Item>
-        <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
-          <Input onChange={(e) => setTag(e.target.value)} />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ backgroundColor: "rgb(102, 187, 106)" }}
+        <div>
+          <Typography.Title
+            level={2}
+            style={{ textAlign: "center", marginBottom: "20px" }}
           >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+            Create an Event
+          </Typography.Title>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Card style={{ width: 500 }}>
+            <Form
+              labelCol={{ span: 30 }}
+              wrapperCol={{ span: 18 }}
+              layout="vertical"
+              style={{ maxWidth: 600 }}
+              onFinish={createEvent}
+            >
+              <Form.Item
+                label="Description"
+                name="description"
+                rules={[{ required: true }]}
+              >
+                <Input onChange={(e) => setDescription(e.target.value)} />
+              </Form.Item>
+              <Form.Item
+                label="Quantity"
+                name="quantity"
+                rules={[
+                  { required: true },
+                  { pattern: /^[0-9]+$/, message: "Please enter a number." },
+                ]}
+              >
+                <Input onChange={(e) => setQuantity(e.target.value)} />
+              </Form.Item>
+              <Form.Item
+                label="Expiration Time"
+                name="expTime"
+                rules={[{ required: true }]}
+              >
+                <DatePicker
+                  showTime
+                  format="YYYY-MM-DD HH:mm"
+                  onChange={(date, dateString) => setExpTime(dateString)}
+                />
+              </Form.Item>
+              <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
+                <Input onChange={(e) => setTag(e.target.value)} />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ backgroundColor: "rgb(102, 187, 106)" }}
+                >
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </Card>
+        </div>
+      </div>
+    </>
   );
 };
 
