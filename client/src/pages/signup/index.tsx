@@ -42,18 +42,21 @@ const Signup = () => {
       //if it passes all the requirements it needs to match the code with the signUp route
     } else {
       //a post request to the api
-      fetch("http://localhost:5005/api/auth/signup", {
-        //posts the user inputs into the database
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: nameText,
-          email: emailText,
-          password: passwordText,
-        }),
-      })
+      fetch(
+        "https://cs392-team-7-e01a3988ee9c.herokuapp.com//api/auth/signup",
+        {
+          //posts the user inputs into the database
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nameText,
+            email: emailText,
+            password: passwordText,
+          }),
+        }
+      )
         .then((response) => {
           if (response.ok) {
             //the following is only when taking the user to the protected page as it stores the token
