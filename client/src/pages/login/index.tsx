@@ -146,7 +146,7 @@ const Login = () => {
               textAlign: "center",
             }}
           >
-            <a href="http://localhost:3000">
+            <a href="\">
               <Typography.Text strong style={{ color: "#66BB6A" }}>
                 Back to Home
               </Typography.Text>
