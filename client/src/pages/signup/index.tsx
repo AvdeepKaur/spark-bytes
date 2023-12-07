@@ -45,6 +45,7 @@ const Signup = () => {
       fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/auth/signup", {
         //posts the user inputs into the database
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-Type": "application/json",
         },
