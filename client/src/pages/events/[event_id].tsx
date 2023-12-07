@@ -81,7 +81,7 @@ const Events: React.FC = () => {
   })) : [];
 
   return (
-    <div style={{ marginLeft: '200px', borderColor: 'red' }}>
+    <div style={{ marginLeft: "200px", borderColor: "red" }}>
       <Table
         loading={isLoading}
         dataSource={tableData}
