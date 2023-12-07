@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const onFinish = async (values: any) => {
-    fetch("http://localhost:5005/api/auth/login", {
+    fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/auth/login", {
       //posts the user inputs into the database
       method: "POST",
       headers: {

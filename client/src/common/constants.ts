@@ -1,1 +1,2 @@
-export const API_URL: string = "http://localhost:5005";
+export const API_URL: string =
+  "https://cs392-team-7-e01a3988ee9c.herokuapp.com";
