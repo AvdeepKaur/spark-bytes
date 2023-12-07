@@ -102,9 +102,9 @@ export const create_event = async (req: Request, res: Response) => {
     const userId = req.body.user.id;
     console.log(userId);
     const now = new Date().toISOString();
-    // const photoData = req.body.photos;
-    // const photoBuffer = Buffer.from(photoData, 'base64');
-    // const photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
+    const photoData = req.body.photos;
+    const photoBuffer = Buffer.from(photoData, 'base64');
+    const photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
     console.log('Value of tags:', tags);
     const dbTag = await prisma.tag.findFirst({
       where: {
@@ -113,39 +113,39 @@ export const create_event = async (req: Request, res: Response) => {
     });
     console.log(dbTag);
     if (dbTag) {
-    const newEvent = await prisma.event.create({
-      data: {
-        post_time: now,
-        exp_time,
-        description,
-        qty,
-        done: false,
+      const newEvent = await prisma.event.create({
+        data: {
+          post_time: now,
+          exp_time,
+          description,
+          qty,
+          done: false,
 
-        tags: {
-          connect: { tag_id: dbTag.tag_id }, // Use the 'connect' property directly
+          tags: {
+            connect: { tag_id: dbTag.tag_id }, // Use the 'connect' property directly
+          },
+          createdBy: {
+            connect: { id: userId },
+          },
+          createdAt: now,
+          updatedAt: now,
+          // location: {
+          //   create: {
+          //     Address: location.Address,
+          //     floor: location.floor,
+          //     room: location.room,
+          //     loc_note: location.loc_note,
+          //   },
+          // },
+          photos: {
+            create: {
+              photo: photoBase64,
+            },
+          },
         },
-        createdBy: {
-          connect: { id: userId },
-        },
-        createdAt: now,
-        updatedAt: now,
-        // location: {
-        //   create: {
-        //     Address: location.Address,
-        //     floor: location.floor,
-        //     room: location.room,
-        //     loc_note: location.loc_note,
-        //   },
-        // },
-        // photos: {
-        //   create: {
-        //     photo: photoBase64,
-        //   },
-        // },
-      },
-    });
+      });
 
-    res.status(201).json(newEvent);
+      res.status(201).json(newEvent);
     }
   } catch (error) {
     console.error('Error creating event:', error);

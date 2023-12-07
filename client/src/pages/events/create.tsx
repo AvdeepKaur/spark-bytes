@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { BoldOutlined } from "@ant-design/icons";
+import { BoldOutlined, UploadOutlined } from "@ant-design/icons";
 import {
   Typography,
   Button,
@@ -8,11 +8,13 @@ import {
   DatePicker,
   Select,
   Card,
+  Upload,
 } from "antd";
 import { useAuth } from "../../contexts/AuthContext";
 import router from "next/router";
 
 const Create = () => {
+  const [photoList, setPhotoList] = useState<string[]>([]);
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [expTime, setExpTime] = useState("");
@@ -31,6 +33,7 @@ const Create = () => {
         description: description,
         qty: quantity,
         tags: { connect: tag },
+        photos: photoList,
       }),
     })
       .then(async (response) => {
@@ -42,6 +45,16 @@ const Create = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+  };
+
+  //handler for uploading photos
+  const onUploadHandler = (e: any) => {
+    {
+      const newPhoto = e.fileList.map(
+        (file: { originFileObj: any }) => file.originFileObj
+      );
+      setPhotoList([...photoList, ...newPhoto]);
+    }
   };
 
   return (
@@ -116,6 +129,16 @@ const Create = () => {
                 >
                   Submit
                 </Button>
+              </Form.Item>
+              <Form.Item>
+                <Upload
+                  listType="picture"
+                  maxCount={10}
+                  multiple
+                  onChange={onUploadHandler}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload>
               </Form.Item>
             </Form>
           </Card>
