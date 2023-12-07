@@ -14,6 +14,11 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use(express.json());
 
+app.get('/cors', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.send({ msg: 'This has CORS enabled 🎈' });
+});
+    
 //app.use('/api/', helloRouter);
 app.use('/api/user', userRouter);
 app.use('/api', helloRouter);
