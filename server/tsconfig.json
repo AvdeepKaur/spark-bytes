@@ -13,7 +13,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": false,
     "noUnusedLocals": false,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true,
