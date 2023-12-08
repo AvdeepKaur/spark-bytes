@@ -102,9 +102,10 @@ export const create_event = async (req: Request, res: Response) => {
     const userId = req.body.user.id;
     console.log(userId);
     const now = new Date().toISOString();
-    // const photoData = req.body.photos;
-    // const photoBuffer = Buffer.from(photoData, 'base64');
-    // const photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
+    const photoData = req.body.photos;
+    console.log(photoData);
+    const photoBuffer = Buffer.from(photoData, 'base64');
+    const photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
     console.log('Value of tags:', tags);
     const dbTag = await prisma.tag.findFirst({
       where: {
@@ -137,11 +138,11 @@ export const create_event = async (req: Request, res: Response) => {
         //     loc_note: location.loc_note,
         //   },
         // },
-        // photos: {
-        //   create: {
-        //     photo: photoBase64,
-        //   },
-        // },
+        photos: {
+          create: {
+            photo: photoBase64,
+          },
+        },
       },
     });
 

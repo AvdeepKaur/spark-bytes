@@ -1,7 +1,10 @@
 import React, { useContext, FC, useState } from "react";
-import { Typography, Button, Form, Input, DatePicker, Select } from "antd";
+import { Typography, Button, Form, Input, DatePicker, Upload } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import { useAuth } from "../../contexts/AuthContext";
 import router from "next/router";
+import type { UploadProps } from 'antd/es/upload';
+import type { UploadFile } from 'antd/es/upload/interface';
 
 const Create: React.FC = () => {
   const [description, setDescription] = useState("");
@@ -9,6 +12,7 @@ const Create: React.FC = () => {
   const [expTime, setExpTime] = useState("");
   const [tag, setTag] = useState("");
   const { getAuthState, authState } = useAuth();
+  const [fileList, setFileList] = useState<UploadFile[]>();
 
   const createEvent = async (values: any) => {
     fetch("http://localhost:5005/api/events/create", {
@@ -22,6 +26,7 @@ const Create: React.FC = () => {
         description: description,
         qty: quantity,
         tags: { connect: tag },
+        photos: fileList,
       }),
     })
       .then(async (response) => {
@@ -35,6 +40,16 @@ const Create: React.FC = () => {
         console.error("Error:", error);
       });
   };
+
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+    setFileList(newFileList);
 
   return (
     <div
@@ -88,6 +103,14 @@ const Create: React.FC = () => {
         </Form.Item>
         <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
           <Input onChange={(e) => setTag(e.target.value)} />
+        </Form.Item>
+        <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
+          <Upload action="/events" listType="picture-card" maxCount={10} onChange={handleChange}>
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Upload</div>
+            </div>
+          </Upload>
         </Form.Item>
         <Form.Item>
           <Button
