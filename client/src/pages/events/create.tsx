@@ -14,6 +14,7 @@ const Create: React.FC = () => {
   const [tag, setTag] = useState("");
   const { getAuthState, authState } = useAuth();
   const [fileList, setFileList] = useState<UploadFile[]>();
+  const [location, setLocation] = useState([]);
 
 
   const createEvent = async (values: any) => {
@@ -29,6 +30,7 @@ const Create: React.FC = () => {
         qty: quantity,
         tags: { connect: tag },
         photos: fileList,
+        location: location,
       }),
     })
       .then(async (response) => {
@@ -54,6 +56,13 @@ const Create: React.FC = () => {
 
   const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
     setFileList(newFileList);
+
+
+  const addString = (fieldName: string, value: string) => {
+    setLocation((prevArray) => ({
+      ...prevArray, [fieldName]: fieldName === 'floor' ? parseInt(value) : value,
+    }));
+  };
 
 
   return (
@@ -109,6 +118,34 @@ const Create: React.FC = () => {
         </Form.Item>
         <Form.Item label="Tag" name="tag" rules={[{ required: true }]}>
           <Input onChange={(e) => setTag(e.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label="Location Address"
+          name="address"
+          rules={[{ required: true }]}
+        >
+          <Input onChange={(e) => addString("Address", e.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label="Floor Number"
+          name="floor number"
+          rules={[{ required: true }]}
+        >
+          <Input onChange={(e) => addString("floor", e.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label="Room Number"
+          name="room number"
+          rules={[{ required: true }]}
+        >
+          <Input onChange={(e) => addString("room", e.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label="Note"
+          name="location note"
+          rules={[{ required: true }]}
+        >
+          <Input onChange={(e) => addString("loc_note", e.target.value)} />
         </Form.Item>
         <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
           <Upload action="/events" listType="picture-card" maxCount={10} onChange={handleChange}>
