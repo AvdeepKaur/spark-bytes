@@ -13,9 +13,20 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(
   cors({
-    origin: 'https://spark-bytes-project-team-7-eight.vercel.app/',
-  })
-);
+    origin: function(origin,callback){
+    const allowedOrigins=[
+    'https://spark-bytes-project-team-7-eight.vercel.app/',
+    'https://spark-bytes-project-team-7-eight.vercel.app/login',
+    'https://spark-bytes-project-team-7-eight.vercel.app/signup'
+
+  ];
+  if (!origin || allowedOrigins.includes(origin)){
+    callback(null,true);
+  }else{
+    callback(new Error('not allowed by cors'));
+  }
+  },
+}));
 app.use(express.json());
 
 //app.use('/api/', helloRouter);

@@ -42,7 +42,7 @@ const Signup = () => {
       //if it passes all the requirements it needs to match the code with the signUp route
     } else {
       //a post request to the api
-      fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/signup", {
+      fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/auth/signup", {
         //posts the user inputs into the database
         method: "POST",
         headers: {
