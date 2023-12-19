@@ -16,11 +16,7 @@ app.use(express.json());
 
 app.use((req, res, next) => {
   const allowedOrigins = [
-    'https://spark-bytes-project-team-7-git-main-spark-team-7.vercel.app',
-    'https://spark-bytes-project-team-7-hl82eo404-spark-team-7-frontend.vercel.app/login',
-    'https://spark-bytes-project-team-7-git-main-spark-team-7.vercel.app/signup',
-    'spark-bytes-project-team-7-git-dep-0c896f-spark-team-7-frontend.vercel.app',
-    'https://cs392-team-7-e01a3988ee9c.herokuapp.com' /* add other origins as needed */,
+    'https://spark-bytes-project-team-7-git-main-spark-team-7.vercel.app' /* add other origins as needed */,
   ];
   const origin: string | undefined = req.headers.origin;
 
