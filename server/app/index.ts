@@ -14,24 +14,6 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use(express.json());
 
-app.use((req, res, next) => {
-  const allowedOrigins = [
-    'https://spark-bytes-project-team-7-git-main-spark-team-7.vercel.app' /* add other origins as needed */,
-  ];
-  const origin: string | undefined = req.headers.origin;
-
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
-
-  
-    
 //app.use('/api/', helloRouter);
 app.use('/api/user', userRouter);
 app.use('/api', helloRouter);
