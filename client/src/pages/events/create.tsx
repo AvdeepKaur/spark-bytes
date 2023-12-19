@@ -12,10 +12,17 @@ const Create: React.FC = () => {
   const [quantity, setQuantity] = useState("");
   const [expTime, setExpTime] = useState("");
   const [tag, setTag] = useState("");
-  const { getAuthState, authState } = useAuth();
+  const { getAuthState } = useAuth();
   const [fileList, setFileList] = useState<UploadFile[]>();
   const [location, setLocation] = useState([]);
 
+  const authToken = getAuthState();
+  if (authToken.decodedToken) {
+    if (!authToken.decodedToken.canPostEvents) {
+      console.error("ERROR: Doesn't have access to this page");
+      router.push("/events");
+    }
+  }
 
   const createEvent = async (values: any) => {
     fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/events/create", {
@@ -36,15 +43,14 @@ const Create: React.FC = () => {
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-          router.push("/events");
           alert("event created!");
+          router.push("/events");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
-
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -53,17 +59,15 @@ const Create: React.FC = () => {
     return e?.fileList;
   };
 
-
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
     setFileList(newFileList);
-
 
   const addString = (fieldName: string, value: string) => {
     setLocation((prevArray) => ({
-      ...prevArray, [fieldName]: fieldName === 'floor' ? parseInt(value) : value,
+      ...prevArray,
+      [fieldName]: fieldName === "floor" ? parseInt(value) : value,
     }));
   };
-
 
   return (
     <div
@@ -72,14 +76,14 @@ const Create: React.FC = () => {
         padding: "20px",
         width: "100%",
         height: "100%",
-      }}>
+      }}
+    >
       <Typography.Title
         level={2}
         style={{ textAlign: "center", marginBottom: "20px" }}
       >
         Create an Event
       </Typography.Title>
-
 
       <Form
         labelCol={{ span: 6 }}
@@ -147,8 +151,17 @@ const Create: React.FC = () => {
         >
           <Input onChange={(e) => addString("loc_note", e.target.value)} />
         </Form.Item>
-        <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
-          <Upload action="/events" listType="picture-card" maxCount={10} onChange={handleChange}>
+        <Form.Item
+          label="Upload"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload
+            action="/events"
+            listType="picture-card"
+            maxCount={10}
+            onChange={handleChange}
+          >
             <div>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Upload</div>
