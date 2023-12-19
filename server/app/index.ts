@@ -20,12 +20,15 @@ app.use(
     'https://spark-bytes-project-team-7-eight.vercel.app/signup'
 
   ];
+  
   if (!origin || allowedOrigins.includes(origin)){
     callback(null,true);
   }else{
     callback(new Error('not allowed by cors'));
   }
   },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true
 }));
 app.use(express.json());
 
