@@ -5,7 +5,8 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:5005/api/:path*",
+        destination:
+          "https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/:path*",
       },
     ];
   },

@@ -18,7 +18,7 @@ const Create: React.FC = () => {
 
 
   const createEvent = async (values: any) => {
-    fetch("http://localhost:5005/api/events/create", {
+    fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/events/create", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${getAuthState()?.token}`,
