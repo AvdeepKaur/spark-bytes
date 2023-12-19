@@ -5,7 +5,7 @@ const port = process.env.PORT || '5005';
 const server = express();
 server.use(
   cors({
-    origin: 'https://spark-bytes-project-team-7-git-main-spark-team-7.vercel.app/',
+    origin: 'https://spark-bytes-project-team-7-git-dep-0c896f-spark-team-7-frontend.vercel.app/',
   })
 );
 server.use(app);
