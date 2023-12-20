@@ -45,6 +45,7 @@ const Events: React.FC = () => {
   }, [getAuthState]);
 
   const selectedEvent = events.find((ev) => ev.event_id === Number(event_id));
+  console.log('Selected Event:', selectedEvent);
 
   const columns = [
     {
@@ -63,8 +64,9 @@ const Events: React.FC = () => {
           ));
         }
         if (record.field === 'location') {
-          return value
-            ? `${value.Address}, Floor ${value.floor}, Room ${value.room}`
+          const locationValue = value || {}; // Ensure locationValue is an object
+          return locationValue.Address
+            ? `Address: ${locationValue.Address}, Floor ${locationValue.floor}, Room ${locationValue.room}`
             : 'Not specified';
         }
         //if (record.field === '' && value) {
