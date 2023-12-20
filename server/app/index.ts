@@ -13,23 +13,38 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(
   cors({
-    origin: function(origin,callback){
-    const allowedOrigins=[
-    'https://spark-bytes-project-team-7-eight.vercel.app/',
-    'https://spark-bytes-project-team-7-eight.vercel.app/login',
-    'https://spark-bytes-project-team-7-eight.vercel.app/signup'
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        'https://spark-bytes-project-team-7-eight.vercel.app',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/auth/login',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/auth/signup',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/events',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/events/user/:userId',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/events/:event_id',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/events/create',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/create',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/tags',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/type/create',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/type',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/type/all',
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/user/update/:userId'
+      ];
 
-  ];
-  
-  if (!origin || allowedOrigins.includes(origin)){
-    callback(null,true);
-  }else{
-    callback(new Error('not allowed by cors'));
-  }
-  },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true
-}));
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('not allowed by cors'));
+      }
+    },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+  }));
+
+app.use((req, res, next) => {
+  console.log('Incoming Request Headers:', req.headers);
+  next();
+});
+
 app.use(express.json());
 
 //app.use('/api/', helloRouter);
