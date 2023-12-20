@@ -12,6 +12,10 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 const allowedOrigins = [
   'https://spark-bytes-project-team-7-eight.vercel.app',
+  'https://spark-bytes-project-team-7-git-main-spark-team-7.vercel.app',
+  'https://spark-bytes-project-team-7-git-main-spark-team-7-frontend.vercel.app',
+  'https://spark-bytes-project-team-7-spark-team-7-frontend.vercel.app',
+
   // Add any other domains you want to allow requests from
 ];
 
