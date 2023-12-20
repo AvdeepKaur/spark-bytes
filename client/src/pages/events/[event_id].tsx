@@ -67,8 +67,8 @@ const Events: React.FC = () => {
         }
         if (record.field === "location") {
           const locationValue = value || {}; // Ensure locationValue is an object
-          return selectedEvent.location.Address
-            ? `Address: ${selectedEvent.location.Address}, Floor ${selectedEvent.location.floor}, Room ${selectedEvent.location.room}`
+          return locationValue.Address
+            ? `Address: ${locationValue.Address}, Floor ${locationValue.floor}, Room ${locationValue.room}`
             : "Not specified";
         }
 
