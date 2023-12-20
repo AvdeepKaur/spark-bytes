@@ -152,6 +152,7 @@ export const create_event = async (req: Request, res: Response) => {
     }
   } catch (error) {
     //console.error('Error creating event:', error);
+    console.error('Error creating event:', error);
     res.status(500).json();
   }
 };
