@@ -1,6 +1,7 @@
 import express from 'express';
-import { authToken } from '../middleware/authToken.ts';
 import * as eventController from './event.controller.ts';
+import { authToken } from '../middleware/authToken.ts';
+
 // /api/events/
 const router = express.Router();
 

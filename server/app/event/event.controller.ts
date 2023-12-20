@@ -141,9 +141,7 @@ export const create_event = async (req: Request, res: Response) => {
             },
           },
           photos: {
-            create: {
-              photo: photoBase64,
-            },
+            create: { photo: photoBase64 },
           },
         },
       });
