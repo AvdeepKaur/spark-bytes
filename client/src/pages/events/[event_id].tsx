@@ -67,9 +67,7 @@ const Events: React.FC = () => {
         }
         if (record.field === 'location') {
           if (value && value.Address !== undefined && value.floor !== undefined && value.room !== undefined) {
-            return `${value.Address}, Floor ${value.floor}, Room ${value.room}`;
-          } else {
-            return 'Not specified';
+            return value ? value.Address : "Not Specified"
           }
         }
 
