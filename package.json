@@ -5,7 +5,8 @@
   "main": "server/server.ts",
   "scripts": {
     "start": "ts-node  server/server.ts",
-    "dev": "nodemon server/server.ts"
+    "dev": "nodemon server/server.ts",
+    "postinstall": "prisma generate"
   },
   "author": "",
   "license": "ISC",
