@@ -64,10 +64,11 @@ const Events: React.FC = () => {
           ));
         }
         if (record.field === 'location') {
-          const locationValue = value || {}; // Ensure locationValue is an object
-          return locationValue.Address
-            ? `Address: ${locationValue.Address}, Floor ${locationValue.floor}, Room ${locationValue.room}`
-            : 'Not specified';
+          if (value && value.Address && value.floor && value.room) {
+            return `${value.Address}, Floor ${value.floor}, Room ${value.room}`;
+          } else {
+            return 'Not specified';
+          }
         }
         //if (record.field === '' && value) {
         //  return `${}`
