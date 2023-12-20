@@ -62,11 +62,13 @@ const Events: React.FC = () => {
             <Tag key={tag.tag_id}>{tag.name}</Tag>
           ));
         }
-        if (record.field === 'location') {
+        console.log(record.field, value);
+        if (record.field === "location") {
           return value
-            ? `${value.Address}, Floor ${value.floor}, Room ${value.room}`
-            : 'Not specified';
+            ? `${value?.Address}, Floor ${value?.floor}, Room ${value?.room}`
+            : "Not specified";
         }
+        
         //if (record.field === '' && value) {
         //  return `${}`
         //}
