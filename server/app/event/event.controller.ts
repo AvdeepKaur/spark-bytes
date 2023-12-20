@@ -96,98 +96,66 @@ export const get_event_by_id = async (req: Request, res: Response) => {
   }
 };
 
-interface EventData {
-  post_time: string;
-  exp_time: string;
-  description: string;
-  qty: number;
-  done: boolean;
-  tags: {
-    connect: { tag_id: number };
-  };
-  createdBy: {
-    connect: { id: number };
-  };
-  createdAt: string;
-  updatedAt: string;
-  location: {
-    create: {
-      Address: string;
-      floor: number;
-      room: string;
-      loc_note: string;
-    };
-  };
-  photos?: {
-    create: { photo: string };
-  };
-}
-
 export const create_event = async (req: Request, res: Response) => {
+  const { exp_time, description, qty, tags, location } = req.body;
+  if (!req.body.user.canPostEvents) {
+    console.log(req.body.user);
+    console.error('ERROR: Not Authorized');
+    res.status(403).json({ error: 'Not Authorized' });
+  }
   try {
-    const { exp_time, description, qty, tags, location } = req.body;
     const userId = req.body.user.id;
-    const photoData = req.body.photos;
-    let photoBase64;
-
-    // Only attempt to convert photoData if it's provided
-    if (photoData) {
-      const photoBuffer = Buffer.from(photoData, 'base64');
-      photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
-    }
 
     const now = new Date().toISOString();
+    const photoData = req.body.photos;
+    const photoBuffer = Buffer.from(photoData, 'base64');
+    const photoBase64 = photoBuffer.toString('base64'); // Convert Buffer to base64 string
     const dbTag = await prisma.tag.findFirst({
       where: {
         name: String(tags.connect),
       },
     });
+    if (dbTag) {
+      const newEvent = await prisma.event.create({
+        data: {
+          post_time: now,
+          exp_time,
+          description,
+          qty,
+          done: false,
 
-    const eventData: EventData = {
-      post_time: now,
-      exp_time,
-      description,
-      qty,
-      done: false,
-      tags: {
-        connect: { tag_id: dbTag?.tag_id },
-      },
-      createdBy: {
-        connect: { id: userId },
-      },
-      createdAt: now,
-      updatedAt: now,
-      location: {
-        create: {
-          Address: location.Address,
-          floor: location.floor,
-          room: location.room,
-          loc_note: location.loc_note,
+          tags: {
+            connect: { tag_id: dbTag.tag_id }, // Use the 'connect' property directly
+          },
+          createdBy: {
+            connect: { id: userId },
+          },
+          createdAt: now,
+          updatedAt: now,
+          location: {
+            create: {
+              Address: location.Address,
+              floor: location.floor,
+              room: location.room,
+              loc_note: location.loc_note,
+            },
+          },
+          photos: {
+            create: {
+              photo: photoBase64,
+            },
+          },
         },
-      },
-    };
+      });
 
-    // Add photos data if available
-    if (photoBase64) {
-      eventData.photos = {
-        create: {
-          photo: photoBase64,
-        },
-      };
+      res.status(201).json(newEvent);
     }
-
-    const newEvent = await prisma.event.create({
-      data: eventData,
-    });
-
-    res.status(201).json(newEvent);
   } catch (error) {
+    //console.error('Error creating event:', error);
     console.error('Error creating event:', error);
-    res.status(500).json({ error: error.message || 'Server error' });
+    res.status(500).json();
   }
 };
-
-
 
 export const edit_event = async (req: Request, res: Response) => {
   const { event_id } = req.params;
