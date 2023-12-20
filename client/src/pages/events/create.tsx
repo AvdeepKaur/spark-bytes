@@ -31,6 +31,7 @@ const Create: React.FC = () => {
         Authorization: `Bearer ${getAuthState()?.token}`,
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         exp_time: new Date(expTime).toISOString(),
         description: description,

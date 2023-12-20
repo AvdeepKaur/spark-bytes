@@ -26,6 +26,7 @@ const Events: React.FC = () => {
           headers: {
             Authorization: `Bearer ${getAuthState()?.token}`,
           },
+          credentials: "include",
         });
 
         if (!eventsResponse.ok) {
