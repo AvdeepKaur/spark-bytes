@@ -108,33 +108,6 @@ const Events: FC = () => {
     router.push(`/events/${event.event_id}`); // Navigate to the view page
   };
 
-  // const createEvent = async (values: any) => {
-
-  //   fetch("http://localhost:5005/api/events/create", {
-  //     method: "POST",
-  //     headers: {
-  //       Authorization: `Bearer ${getAuthState()?.token}`,
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       exp_time: new Date(expTime).toISOString(),
-  //       description: description,
-  //       qty: quantity,
-  //       tags: tag,
-  //     }),
-  //   })
-  //     .then(async (response) => {
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         router.push("/events");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-
-  // };
-
   return (
     <div
       style={{
@@ -268,11 +241,11 @@ const Events: FC = () => {
                 Tags:{" "}
                 {event.tags && event.tags.length > 0
                   ? event.tags.map((tag, index) => (
-                      <span key={(tag as ITag).tag_id}>
-                        {(tag as ITag).name}
-                        {index !== event.tags.length - 1 && ", "}
-                      </span>
-                    ))
+                    <span key={(tag as ITag).tag_id}>
+                      {(tag as ITag).name}
+                      {index !== event.tags.length - 1 && ", "}
+                    </span>
+                  ))
                   : " Not specified"}
                 <br />
                 Location:{" "}
