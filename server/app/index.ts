@@ -27,7 +27,7 @@ app.use(
         'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/type/create',
         'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/type',
         'https://spark-bytes-project-team-7-eight.vercel.app/api/tags/type/all',
-        'https://spark-bytes-project-team-7-eight.vercel.app/api/user/update/:userId'
+        'https://spark-bytes-project-team-7-eight.vercel.app/api/user/update/:userId',
       ];
 
       if (!origin || allowedOrigins.includes(origin)) {
@@ -39,11 +39,6 @@ app.use(
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
   }));
-
-app.use((req, res, next) => {
-  console.log('Incoming Request Headers:', req.headers);
-  next();
-});
 
 app.use(express.json());
 
