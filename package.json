@@ -4,9 +4,10 @@
   "description": "",
   "main": "server/server.ts",
   "scripts": {
+    "postinstall": "prisma generate",
     "start": "ts-node  server/server.ts",
-    "dev": "nodemon server/server.ts",
-    "postinstall": "prisma generate"
+    "dev": "nodemon server/server.ts"
+    
   },
   "author": "",
   "license": "ISC",
