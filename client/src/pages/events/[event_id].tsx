@@ -68,8 +68,11 @@ const Events: React.FC = () => {
         if (record.field === 'location') {
           if (value && value.Address !== undefined && value.floor !== undefined && value.room !== undefined) {
             return `${value.Address}, Floor ${value.floor}, Room ${value.room}`;
-          } else {
+          } else if (value && typeof value === 'object') {
+            console.log("Value is an object:", value);
             return 'Not specified';
+          } else {
+            return value ? value.toString() : 'Not specified';
           }
         }
 
