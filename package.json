@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/server.ts",
   "scripts": {
-    "postinstall": "prisma generate",
+    "postinstall": "npx prisma generate",
     "start": "ts-node  server/server.ts",
     "dev": "nodemon server/server.ts"
     
