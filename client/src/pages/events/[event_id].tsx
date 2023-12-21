@@ -89,7 +89,7 @@ const Events: React.FC = () => {
           return value.map((photoObj: { photo: any }, index: any) => (
             <img
               key={index}
-              src={`${photoObj.photo}`} // Replace 'jpeg' with the correct format, if necessary
+              src={`data:image/jpeg;base64,${photoObj.photo}`} // Replace 'jpeg' with the correct format, if necessary
               alt={`Event Photo ${index}`}
               style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust styles as needed
             />
