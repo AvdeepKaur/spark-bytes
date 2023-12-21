@@ -73,7 +73,7 @@ const Events: React.FC = () => {
             return 'Not specified';
           }
         }
-        if (record.field == "created by") {
+        if (record.field == "createdBy") {
           return value.name;
         }
 
