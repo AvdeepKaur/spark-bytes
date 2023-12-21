@@ -103,7 +103,7 @@ export const get_event_by_id = async (req: Request, res: Response) => {
 };
 
 export const create_event = async (req: Request, res: Response) => {
-  const { exp_time, description, qty, tags, location } = req.body;
+  const { exp_time, description, qty, tags, location, photos } = req.body;
   if (!req.body.user.canPostEvents) {
     console.log(req.body.user);
     console.error('ERROR: Not Authorized');
@@ -147,7 +147,7 @@ export const create_event = async (req: Request, res: Response) => {
             },
           },
           photos: {
-            create: { photo: photoBase64 },
+            create: photos.map((photo) => ({ photo })),
           },
         },
       });
