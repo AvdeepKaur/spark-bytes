@@ -76,6 +76,10 @@ const Events: React.FC = () => {
         if (record.field == "createdBy") {
           return `${value.name}`;
         }
+
+        if (record.field == 'photos'){
+          return ();
+        }
         //if (record.field === '' && value) {
         //  return `${}`
         //}
