@@ -46,7 +46,9 @@ const Events: React.FC = () => {
     fetchEvents();
   }, [getAuthState]);
 
-  const selectedEvent = events.find((ev) => ev.event_id === Number(event_id));
+  const selectedEvent = events.find(
+    (ev: { event_id: number }) => ev.event_id === Number(event_id)
+  );
   console.log("Selected Event:", selectedEvent);
 
   const columns = [
@@ -83,23 +85,15 @@ const Events: React.FC = () => {
         }
 
         if (record.field === "photos") {
-          return (
-            <>
-              {value &&
-                value.map((photo: { photo: string }, index: number) => (
-                  <img
-                    key={index}
-                    src={`data:image/jpeg;base64,${photo.photo}`} // Assuming 'photo' is the Base64 encoded string
-                    alt={`Event Photo ${index}`}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      marginRight: "10px",
-                    }} // Customize as needed
-                  />
-                ))}
-            </>
-          );
+          // Assuming 'value' is an array of objects with a 'photo' property
+          return value.map((photoObj: { photo: any }, index: any) => (
+            <img
+              key={index}
+              src={`data:image/jpeg;base64,${photoObj.photo}`} // Replace 'jpeg' with the correct format, if necessary
+              alt={`Event Photo ${index}`}
+              style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust styles as needed
+            />
+          ));
         }
         //if (record.field === '' && value) {
         //  return `${}`
