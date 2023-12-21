@@ -76,7 +76,25 @@ const Events: React.FC = () => {
         if (record.field == "createdBy") {
           return `${value.name}`;
         }
+        if (record.field == "photos") {
+          if (!photos || photos.length === 0) return null;
 
+          return photos.map((photoObj, index) => (
+            <div key={index}>
+              <Image
+                src={photoObj.photo}
+                alt={`Event Photo ${index + 1}`}
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                  marginBottom: "10px",
+                }}
+                width={500}
+                height={500}
+              />
+            </div>
+          ));
+        }
         //if (record.field === '' && value) {
         //  return `${}`
         //}
