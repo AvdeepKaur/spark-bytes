@@ -74,7 +74,7 @@ const Events: React.FC = () => {
           }
         }
         if (record.field == "createdBy") {
-          return value.name;
+          return `${value.name}`;
         }
 
         //if (record.field === '' && value) {
