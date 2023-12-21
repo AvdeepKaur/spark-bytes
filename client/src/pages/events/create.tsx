@@ -45,7 +45,7 @@ const Create: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           alert("event created!");
-          router.push("/events");
+          router.push("/events/create");
         }
       })
       .catch((error) => {
