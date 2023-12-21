@@ -147,7 +147,7 @@ export const create_event = async (req: Request, res: Response) => {
             },
           },
           photos: {
-            create: photos.map((photo: string) => ({ photo: photo || photoBase64 })),
+            create: photos.map((photo: string) => ({ photo })),
           },
         },
       });

@@ -82,7 +82,24 @@ const Events: React.FC = () => {
           return `${value.name}`;
         }
 
-        if (record.field == "photos") {
+        if (record.field === "photos") {
+          return (
+            <>
+              {value &&
+                value.map((photo: { photo: string }, index: number) => (
+                  <img
+                    key={index}
+                    src={`data:image/jpeg;base64,${photo.photo}`} // Assuming 'photo' is the Base64 encoded string
+                    alt={`Event Photo ${index}`}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      marginRight: "10px",
+                    }} // Customize as needed
+                  />
+                ))}
+            </>
+          );
         }
         //if (record.field === '' && value) {
         //  return `${}`
