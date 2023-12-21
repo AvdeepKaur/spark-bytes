@@ -37,7 +37,7 @@ app.use(
 //app.use('/api/', helloRouter);
 app.use('/api/user', userRouter);
 app.use('/api', helloRouter);
-app.use('/api/events', eventsRouter);
+app.post('/api/events', eventsRouter);
 app.use('/api/tags', tagsRouter);
 app.use('/api/auth', authRouter);
 
