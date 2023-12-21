@@ -65,12 +65,17 @@ const Events: React.FC = () => {
             <Tag key={tag.tag_id}>{tag.name}</Tag>
           ));
         }
-        if (record.field === 'location') {
-          console.log('Location Value:', value);
-          if (value && value.Address !== undefined && value.floor !== undefined && value.room !== undefined) {
+        if (record.field === "location") {
+          console.log("Location Value:", value);
+          if (
+            value &&
+            value.Address !== undefined &&
+            value.floor !== undefined &&
+            value.room !== undefined
+          ) {
             return `${value.Address}, Floor ${value.floor}, Room ${value.room}`;
           } else {
-            return 'Not specified';
+            return "Not specified";
           }
         }
         if (record.field == "createdBy") {
@@ -91,11 +96,13 @@ const Events: React.FC = () => {
   // Convert the selected event into a format suitable for Ant Design Table
   const tableData = selectedEvent
     ? Object.entries(selectedEvent).map(([key, value]) => ({
-      key,
-      field: key,
-      value:
-        key === "tags" || key === "createdBy" || key === "location" ? value : value?.toString(),
-    }))
+        key,
+        field: key,
+        value:
+          key === "tags" || key === "createdBy" || key === "location"
+            ? value
+            : value?.toString(),
+      }))
     : [];
 
   return (
