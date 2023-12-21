@@ -158,7 +158,7 @@ const Create: React.FC = () => {
           getValueFromEvent={normFile}
         >
           <Upload
-            action="/events/create"
+            action="/api/events/create"
             listType="picture-card"
             maxCount={10}
             onChange={handleChange}
