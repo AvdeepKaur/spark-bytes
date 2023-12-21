@@ -54,6 +54,12 @@ export const get_active_events = async (_: Request, res: Response) => {
             name: true,
           },
         },
+        photos: {
+          take: 1,
+          select: {
+            photo: true,
+          },
+        },
       },
     });
     return res.json({ events: activeEvents });
