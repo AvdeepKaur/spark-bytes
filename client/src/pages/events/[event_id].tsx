@@ -83,26 +83,6 @@ const Events: React.FC = () => {
         }
 
         if (record.field == "photos") {
-          if (Array.isArray(value)) {
-            return (
-              <div>
-                {value.map((photo, index) => (
-                  <img
-                    key={index}
-                    src={photo.url} // Assuming 'url' is the property where the image URL is stored
-                    alt={`Photo ${index}`}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      marginRight: "5px",
-                    }} // Set appropriate size
-                  />
-                ))}
-              </div>
-            );
-          } else {
-            return "No photos";
-          }
         }
         //if (record.field === '' && value) {
         //  return `${}`
