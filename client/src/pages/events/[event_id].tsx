@@ -86,7 +86,7 @@ const Events: React.FC = () => {
 
         if (record.field === "photos") {
           // Assuming 'value' is an array of objects with a 'photo' property
-          return value.map((photoObj, index: any) => (
+          return value.map((photoObj: any, index: any) => (
             <img
               key={index}
               src={`data:image/png;base64,8J-kng`} // Replace 'jpeg' with the correct format, if necessary
