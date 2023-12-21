@@ -13,7 +13,7 @@ const Create: React.FC = () => {
   const [expTime, setExpTime] = useState("");
   const [tag, setTag] = useState("");
   const { getAuthState } = useAuth();
-  const [fileList, setFileList] = useState<UploadFile[]>();
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [location, setLocation] = useState([]);
 
   const authToken = getAuthState();
@@ -25,7 +25,7 @@ const Create: React.FC = () => {
   }
 
   const createEvent = async (values: any) => {
-    fetch("https://cs392-team-7-e01a3988ee9c.herokuapp.com/api/events/create", {
+    fetch("/api/events/create", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${getAuthState()?.token}`,
