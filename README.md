@@ -1,38 +1,18 @@
+
+
 # DS209 Course Project: Spark Bites
 
 Spark Bites is a platform for Boston University students and faculty members to post events that provide foods or snacks. The aim is to reduce food waste resulting from over-purchasing for events and at the same time, help students access free food.
 
-## Installation Guide
-
-### Client
-Navigate to client folder, and run `npm install` to install all dependencies. Then, run `npm run dev` to start the development server.
-
-### Server
-Navigate to server folder, and run `npm install` to install all dependencies. Then, run `npm run dev` to start the development server.
-
-You need to create a `.env` file before you start the API or the database. Create a file called `.env` in the server folder, and add the following lines:
-```
-POSTGRES_PASSWORD=password
-POSTGRES_USER=postgres
-DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=public"
-JWT_TOKEN_SECRET=asupersecretthing
-```
-
-You also need to setup the database, run `docker compose up -d` to start the database server.
-
-You must use run the database migrate script to setup the database tables. Run `npx prisma migrate deploy` to setup the 
-database tables.
-
-Now you are ready to start the server: `npm run dev`. Will start the server, it will also auto-reload when you make changes.
 ## Features
 
 1. **Signup & Login:** Users can register and select their event preferences. Upon successful login, a JWT token is provided for authentication.
    
-2. **Profile:** [Not completed] Users can view and edit their profiles, and see the events they've posted.
+2. **Profile:**  Users can view and edit their profiles, and see the events they've posted.
    
-3. **Events:** [Not completed] Displays all available events. Users can filter these events based on tags.
+3. **Events:**  Displays all available events. Users can filter these events based on tags.
    
-4. **Create Events:** [Not completed] Authorized users, approved by admins, can post events and add associated images.
+4. **Create Events:**  Authorized users, approved by admins, can post events and add associated images.
 
 ## Technologies & Frameworks
 
